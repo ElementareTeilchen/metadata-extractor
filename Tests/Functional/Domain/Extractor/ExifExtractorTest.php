@@ -24,7 +24,7 @@ class ExifExtractorTest extends AbstractExtractorTest
     protected $exifExtractor;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function setUp()
     {
@@ -39,7 +39,6 @@ class ExifExtractorTest extends AbstractExtractorTest
     public function extractMetaData()
     {
         $metaDataCollection = new MetaDataCollection();
-
 
         $this->exifExtractor->extractMetaData($this->testAsset->getResource(), $metaDataCollection);
 

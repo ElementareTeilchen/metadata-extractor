@@ -24,7 +24,7 @@ class IptcIimExtractorTest extends AbstractExtractorTest
     protected $iptcIimExtractor;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function setUp()
     {

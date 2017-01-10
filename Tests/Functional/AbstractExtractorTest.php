@@ -29,10 +29,13 @@ abstract class AbstractExtractorTest extends AbstractTest
      */
     protected $testAsset;
 
+    /**
+     * @inheritDoc
+     */
     protected static $testablePersistenceEnabled = true;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function setUp()
     {

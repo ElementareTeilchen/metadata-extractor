@@ -21,12 +21,12 @@ use TYPO3\Media\Domain\Model\Asset;
 use TYPO3\Media\Domain\Repository\AssetRepository;
 
 /**
- * {@inheritDoc}
+ * @inheritDoc
  */
 class Package extends BasePackage
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function boot(Bootstrap $bootstrap)
     {

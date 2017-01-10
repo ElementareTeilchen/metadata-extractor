@@ -22,7 +22,7 @@ class ExtractionManagerTest extends AbstractExtractorTest
     protected $extractionManager;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function setUp()
     {

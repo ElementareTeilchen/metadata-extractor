@@ -11,7 +11,6 @@ namespace Neos\MetaData\Extractor\Domain;
  * source code.
  */
 
-use Neos\Media\Domain\Model\ImageVariant;
 use Neos\MetaData\Domain\Collection\MetaDataCollection;
 use Neos\MetaData\Domain\Dto;
 use Neos\MetaData\Extractor\Domain\Extractor\ExtractorInterface;
@@ -23,10 +22,11 @@ use TYPO3\Flow\Reflection\ReflectionService;
 use TYPO3\Flow\Resource\Resource as FlowResource;
 use TYPO3\Media\Domain\Model\Asset;
 use TYPO3\Media\Domain\Model\AssetCollection;
+use TYPO3\Media\Domain\Model\ImageVariant;
 use TYPO3\Media\Domain\Model\Tag;
 
 /**
- * ExtractionManager
+ * @Flow\Scope("singleton")
  */
 class ExtractionManager
 {
@@ -62,7 +62,7 @@ class ExtractionManager
 
         $flowResource = $asset->getResource();
         if ($flowResource === null) {
-            throw new ExtractorException('Resource of Asset "' . $asset->getTitle() . '"" not found.', 201611111954);
+            throw new ExtractorException('Resource of Asset "' . $asset->getTitle() . '"" not found.', 1484060541);
         }
 
         $metaDataCollection = new MetaDataCollection();
@@ -72,8 +72,10 @@ class ExtractionManager
         foreach ($suitableAdapterClasses as $suitableAdapterClass) {
             /** @var ExtractorInterface $suitableAdapter */
             $suitableAdapter = $this->objectManager->get($suitableAdapterClass);
-            if ($suitableAdapter->canHandleExtraction($flowResource)) {
+            try {
                 $suitableAdapter->extractMetaData($flowResource, $metaDataCollection);
+            } catch (ExtractorException $e) {
+                //Extractor is theoretically suitable but failed to extract meta data
             }
         }
 
@@ -90,11 +92,10 @@ class ExtractionManager
     protected function findSuitableExtractorAdaptersForResource(FlowResource $flowResource)
     {
         $extractorAdapters = $this->reflectionService->getAllImplementationClassNamesForInterface(ExtractorInterface::class);
-        $mediaType = $flowResource->getMediaType();
 
-        $suitableAdapterClasses = array_filter($extractorAdapters, function ($extractorAdapterClass) use ($mediaType) {
+        $suitableAdapterClasses = array_filter($extractorAdapters, function ($extractorAdapterClass) use ($flowResource) {
             /** @var ExtractorInterface $extractorAdapterClass */
-            return $extractorAdapterClass::isSuitableFor($mediaType);
+            return $extractorAdapterClass::isSuitableFor($flowResource);
         });
 
         return $suitableAdapterClasses;

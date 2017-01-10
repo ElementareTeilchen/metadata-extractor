@@ -30,6 +30,10 @@ class NumberConverterTest extends UnitTestCase
                 'rational' => '-24/10',
                 'expected' => -2.4
             ],
+            'zero' => [
+                'rational' => '0/0',
+                'expected' => 0.0
+            ],
             'nonRational' => [
                 'rational' => 'twenty-four',
                 'expected' => 0.0
@@ -49,6 +53,4 @@ class NumberConverterTest extends UnitTestCase
         $actual = NumberConverter::convertRationalToFloat($rational);
         $this->assertEquals($expected, $actual);
     }
-
-
 }

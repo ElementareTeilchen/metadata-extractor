@@ -11,6 +11,11 @@ namespace Neos\MetaData\Extractor\Converter;
  * source code.
  */
 
+use TYPO3\Flow\Annotations as Flow;
+
+/**
+ * @Flow\Scope("singleton")
+ */
 class TimeStampConverter
 {
     /**
